@@ -16,8 +16,7 @@ setup(
     author='Tanner Burns',
     author_email='tjburns102@gmail.com',
     install_requires=[
-        'django',
-        'django-rest-framework'
+        'django'
     ],
     classifiers=[
         'Framework :: Django',
