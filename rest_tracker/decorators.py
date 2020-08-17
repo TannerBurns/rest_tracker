@@ -10,10 +10,16 @@ def start_task(request, response):
     response.renderer_context = request.parser_context
     response.render()
     task_data = {
-        'method': request.method,'scheme': request.scheme, 'host': request.get_host(), 'path': request.path,
-        'raw': request.get_raw_uri(), 'user_agent': request.headers.get('User-Agent', 'UNKNOWN'),
+        'method': {'method':request.method},
+        'scheme': {'scheme':request.scheme},
+        'url': {
+            'host':request.get_host(),
+            'path': request.path,
+            'raw': request.get_raw_uri()
+        },
+        'user_agent': {'user_agent': request.headers.get('User-Agent', 'UNKNOWN')},
         'responses': [{
-            'status_code': response.status_code, 'content_size': len(response.content)
+            'status_code': {'status_code':response.status_code}, 'content_size': len(response.content)
         }]
     }
     rest_tracker_task.delay(task_data)

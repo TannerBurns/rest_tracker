@@ -6,7 +6,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 
 setup(
     name='rest_tracker',
-    version='0.0.1',
+    version='0.0.9',
     packages=find_packages(),
     include_package_data=True,
     description='Django app to easily track and store views request and responses',
