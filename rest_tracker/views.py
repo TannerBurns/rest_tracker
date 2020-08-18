@@ -13,20 +13,36 @@ class Rest_Tracker_View(viewsets.GenericViewSet, mixins.ListModelMixin):
     serializer_class = Rest_Tracker_Request_Serializer
 
     def count_methods(self):
-        return {val:Rest_Tracker_Request.objects.filter(method__method=val).count()
-                for val in Rest_Tracker_Methods.objects.values_list('method', flat=True).distinct()}
+        value_list = Rest_Tracker_Methods.objects.values_list('method', flat=True).distinct()
+        base = {val: 0 for val in value_list}
+        for val in value_list:
+            for object in Rest_Tracker_Request.objects.filter(method__method=val):
+                base[val] += object.responses.count()
+        return base
 
     def count_schemes(self):
-        return {val: Rest_Tracker_Request.objects.filter(scheme__scheme=val).count()
-                for val in Rest_Tracker_Schemes.objects.values_list('scheme', flat=True).distinct()}
+        value_list = Rest_Tracker_Schemes.objects.values_list('scheme', flat=True).distinct()
+        base = {val: 0 for val in value_list}
+        for val in value_list:
+            for object in Rest_Tracker_Request.objects.filter(scheme__scheme=val):
+                base[val] += object.responses.count()
+        return base
 
     def count_user_agents(self):
-        return {val: Rest_Tracker_Request.objects.filter(user_agent__user_agent=val).count()
-                for val in Rest_Tracker_User_Agents.objects.values_list('user_agent', flat=True).distinct()}
+        value_list = Rest_Tracker_User_Agents.objects.values_list('user_agent', flat=True).distinct()
+        base = {val: 0 for val in value_list}
+        for val in value_list:
+            for object in Rest_Tracker_Request.objects.filter(user_agent__user_agent=val):
+                base[val] += object.responses.count()
+        return base
 
     def count_hosts(self):
-        return {val: Rest_Tracker_Request.objects.filter(url__host=val).count()
-                for val in Rest_Tracker_Urls.objects.values_list('host', flat=True).distinct()}
+        value_list = Rest_Tracker_Urls.objects.values_list('host', flat=True).distinct()
+        base = {val: 0 for val in value_list}
+        for val in value_list:
+            for object in Rest_Tracker_Request.objects.filter(url__host=val):
+                base[val] += object.responses.count()
+        return base
 
     def count_requests(self):
         total = 0
