@@ -2,11 +2,16 @@
 
     Django app to easily track and store views request and responses
 
+# Requirements
+
+    python3.7+
+    Celery backend for task management
+
 # How To
 
-Step 1: Pip install the rest-tracker library
+Step 1: Pip install the rest-tracker library (this will install django, django-rest-framework, celery, redis, and psycopg2)
   
-    pip3 install rest-tracker
+    pip3 install rest-tracker 
     
 Step 2: Add the rest-tracker django app to the installed apps in settings.py
 
