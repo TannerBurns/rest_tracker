@@ -143,6 +143,15 @@ route /rest_tracker/counts, method GET
 }
 ```
 
+# Elasticsearch (optional)
+
+If you have Elasticsearch and Kibana in your cluster you can easily use rest_tracker to write to an index for easy dashboards and reporting.
+To create the index:
+
+    POST    /rest_tracker/init_es       This will create the Elasticsearch index
+
+Then all request/response tracked will be sent to the ES index as well as stored in the database.
+
 # Rest-Tracker Routes
 
     GET     /rest_tracker               Raw data from collected request and responses
@@ -152,3 +161,4 @@ route /rest_tracker/counts, method GET
     GET     /rest_tracker/hosts         Counts for hosts collected from request
     GET     /rest_tracker/user_agents   Counts for user agents collected from request
     GET     /rest_tracker/requests      Overall count of requests that have been collected
+    POST    /rest_tracker/init_es       Create Elasticsearch index and also write to ES cluster
