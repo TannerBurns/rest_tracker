@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .models import Rest_Tracker_Request, Rest_Tracker_Methods, Rest_Tracker_Schemes, Rest_Tracker_User_Agents, \
     Rest_Tracker_Urls
 from .serializers import Rest_Tracker_Request_Serializer
-
+from .tasks import initialize_es
 
 
 class Rest_Tracker_View(viewsets.GenericViewSet, mixins.ListModelMixin):
@@ -49,6 +49,13 @@ class Rest_Tracker_View(viewsets.GenericViewSet, mixins.ListModelMixin):
         for objects in Rest_Tracker_Request.objects.all():
             total += objects.responses.all().count()
         return {'requests': total}
+
+    @action(detail=False, methods=['post'])
+    def init_es(self, request):
+        host = request.query_params.get('host', None) or 'elasticsearch'
+        port = request.query_params.get('port', None) or '9200'
+        task = initialize_es.delay(host, port)
+        return Response({'task_id': task.id}, status=200)
 
 
     @action(detail=False, methods=['get'])

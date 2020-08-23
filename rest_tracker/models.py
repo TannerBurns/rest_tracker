@@ -1,5 +1,21 @@
 from django.db import models
 
+REST_TRACKER_ES_MAPPING = {
+    'mappings': {
+        'properties': {
+            'created_at': {'type': 'date'},
+            'scheme': {'type': 'text'},
+            'method': {'type': 'text'},
+            'url_host': {'type': 'text'},
+            'url_path': {'type': 'text'},
+            'url_raw': {'type': 'text'},
+            'user_agent': {'type': 'text'},
+            'response_status_code': {'type': 'long'},
+            'response_content_size': {'type': 'long'}
+        }
+    }
+}
+
 class Rest_Tracker_Status_Codes(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     status_code = models.IntegerField(null=False)
